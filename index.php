@@ -18,18 +18,18 @@ $percek		= (isset($_POST['percek'])		and !empty($_POST['percek']))			? $_POST['p
 $tev		= (isset($_POST['tev'])			and !empty($_POST['tev']))				? $_POST['tev']			: date('Y', strtotime($prevtho));
 $tho		= (isset($_POST['tho'])			and !empty($_POST['tho']))				? $_POST['tho']			: date('m', strtotime($prevtho));
 
-$torzs		= (isset($_POST['torzs'])		and !empty($_POST['torzs']))			? $_POST['torzs']		: '10367027';
+$torzs		= (isset($_POST['torzs'])		and !empty($_POST['torzs']))			? $_POST['torzs']		: '';
 $sztorzs	= (isset($_POST['torzs'])		and !empty($_POST['sztorzs']))			? $_POST['sztorzs']		: $torzs;
 
-$jnev		= (isset($_POST['jnev'])		and !empty($_POST['jnev']))				? $_POST['jnev']		: 'Erdősi Zoltán';
-$jbeosztas	= (isset($_POST['jbeosztas'])	and !empty($_POST['jbeosztas']))		? $_POST['jbeosztas']	: 'Ügyvezető';
-$jtelefon	= (isset($_POST['jtelefon'])	and !empty($_POST['jtelefon']))			? $_POST['jtelefon']	: '+36309465680';
-$jemail		= (isset($_POST['jemail'])		and !empty($_POST['jemail']))			? $_POST['jemail']		: 'fotoplus@fotoplus.hu';
+$jnev		= (isset($_POST['jnev'])		and !empty($_POST['jnev']))				? $_POST['jnev']		: '';
+$jbeosztas	= (isset($_POST['jbeosztas'])	and !empty($_POST['jbeosztas']))		? $_POST['jbeosztas']	: '';
+$jtelefon	= (isset($_POST['jtelefon'])	and !empty($_POST['jtelefon']))			? $_POST['jtelefon']	: '';
+$jemail		= (isset($_POST['jemail'])		and !empty($_POST['jemail']))			? $_POST['jemail']		: '';
 
-$knev		= (isset($_POST['knev'])		and !empty($_POST['knev']))				? $_POST['knev']		: 'Pifkóné Somlai Angéla';
-$kbeosztas	= (isset($_POST['kbeosztas'])	and !empty($_POST['kbeosztas']))		? $_POST['kbeosztas']	: 'Pénzügyi vezető';
-$ktelefon	= (isset($_POST['ktelefon'])	and !empty($_POST['ktelefon']))			? $_POST['ktelefon']	: '+36305288701';
-$kemail		= (isset($_POST['kemail'])		and !empty($_POST['kemail']))			? $_POST['kemail']		: 'pifkone.somlaiangela@fotoplus.hu';
+$knev		= (isset($_POST['knev'])		and !empty($_POST['knev']))				? $_POST['knev']		: '';
+$kbeosztas	= (isset($_POST['kbeosztas'])	and !empty($_POST['kbeosztas']))		? $_POST['kbeosztas']	: '';
+$ktelefon	= (isset($_POST['ktelefon'])	and !empty($_POST['ktelefon']))			? $_POST['ktelefon']	: '';
+$kemail		= (isset($_POST['kemail'])		and !empty($_POST['kemail']))			? $_POST['kemail']		: '';
 
 $megjegyzes	= (isset($_POST['megjegyzes'])	and !empty($_POST['megjegyzes']))		? $_POST['megjegyzes']	: '';
 
