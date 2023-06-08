@@ -10,6 +10,28 @@ Az intrastat import/export sablonoknak megfelelő CSV-t készít a beillesztett 
 5. Illesszük be az űrlapba a táblázatot
 6. Nyomjuk meg a "CSV fájl készítése" gombot
 
+## Működés
+
+1. beolvassa a bemásolt táblázatot (tabulátorral tagolt szöveg, soronként)
+2. átalakítja a számos mezőket, hogy azokban valóban csak számok legyenek, például mértékegységek ne.
+3. ellenőrzi, és szükség esetén egyesíti a sorokat a következő logika szerint:
+>
+> Az ha az alábbi mezkők értékei megegyeznek, más sorokban is:
+>		 - 	[0] Harmonizációs kód
+>		 - 	[3] Feladó tagállam / Rendeltetési tagállam
+>		 - 	[4] Származási ország
+>   -  [8] Partner adószáma *(csak OSAP 2010)*
+>
+> Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul:
+>		 - 	[5] Összes nettó tömeg (kg)
+>		 - 	[6] Összes mennyiség (db)
+>		 - 	[7] Számlázott összeg (Ft)
+>
+4. létrehozza a sablonnak megfelelő fejlécadatokat
+5. létrehozza 26 soros blokkokban a sablonnak megfelelő adattartalat
+
+A kimenet egy a sablonnak és dátumnak megfelelő CSV fájl.
+
 ---
 
 ## OSAP 2010 - Export / Kiszállítás : 9 feldolgozandó oszlop
