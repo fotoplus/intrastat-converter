@@ -17,15 +17,15 @@ Az intrastat import/export sablonoknak megfelelő CSV-t készít a beillesztett 
 3. ellenőrzi, és szükség esetén egyesíti a sorokat a következő logika szerint:
 >
 > Az ha az alábbi mezkők értékei megegyeznek, más sorokban is:
->		 - 	[0] Harmonizációs kód
->		 - 	[3] Feladó tagállam / Rendeltetési tagállam
->		 - 	[4] Származási ország
->   -  [8] Partner adószáma *(csak OSAP 2010)*
+>		 - 	[0] Harmonizációs kód<br>
+>		 - 	[3] Feladó tagállam / Rendeltetési tagállam<br>
+>		 - 	[4] Származási ország<br>
+>   -  [8] Partner adószáma *(csak OSAP 2010)*<br>
 >
 > Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul:
->		 - 	[5] Összes nettó tömeg (kg)
->		 - 	[6] Összes mennyiség (db)
->		 - 	[7] Számlázott összeg (Ft)
+>		 - 	[5] Összes nettó tömeg (kg)<br>
+>		 - 	[6] Összes mennyiség (db)<br>
+>		 - 	[7] Számlázott összeg (Ft)<br>
 >
 4. létrehozza a sablonnak megfelelő fejlécadatokat
 5. létrehozza 26 soros blokkokban a sablonnak megfelelő adattartalat
