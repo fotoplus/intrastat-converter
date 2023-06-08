@@ -37,7 +37,7 @@ A kimenet egy a sablonnak és dátumnak megfelelő CSV fájl.
 ## OSAP 2010 - Export / Kiszállítás : 9 feldolgozandó oszlop
 
 *2010 INTRASTAT Kiszállítás CSV SABLON [INTRASTAT Dispatches, CSV file]*
-
+```CSV
 FEJEZET(karakter): Fejezet azonosító, 0 - Elõlap [Chapter ID, 0 - Preface]
 SORREND(numerikus 3 karakter): Elõlap kötelezõen 1 [Numeric, 3 characters, must be 1]
 MC01 (4 karakter): OSAP száma - kötelezõen 2010 [OSAP number, must be 2010]
@@ -69,8 +69,9 @@ KIEGME(numerikus(14,3)karakter): Mennyiség kiegészítõ mértékegységben. A 
 SZAOSSZ(numerikus 14 karakter): Számlázott összeg Forintban [Invoiced amount (HUF)]
 STAERT(numerikus 14 karakter): Statisztikai érték Forintban [Statistical value (HUF)]
 PADO(nax. 40 karakter): Partner adószám [Partner tax ID number]
+```
 
-
+*Feldolgozandó mezők:*
 ```
 [0] = Harmonizációs kód
 [1] = Termék megnevezése
@@ -89,6 +90,7 @@ PADO(nax. 40 karakter): Partner adószám [Partner tax ID number]
 
 *2012 INTRASTAT Beérkezés CSV SABLON [INTRASTAT Arrivals, CSV file]*
 
+```CSV
 FEJEZET(karakter): Fejezet azonosító, 0 - Elõlap [Chapter ID, 0 - Preface]
 SORREND(numerikus 3 karakter): Elõlap 1 [Numeric, 3 characters, Preface 1]
 MC01 (4 karakter): OSAP száma - kötelezõen 2012 [OSAP number, must be 2012]
@@ -118,8 +120,9 @@ KGM(numerikus(14,3)karakter): Nettó tömeg(kg), 1 kg alatt 3 tizedesjegyig kell
 KIEGME(numerikus(14,3)karakter): Mennyiség kiegészítõ mértékegységben. A KN-ben megjelölt termékekre kötelezõ [Quantity in supplementary units. Only where a supplementary unit is specified to the commoditycode in the CN.]
 SZAOSSZ(numerikus 14 karakter): Számlázott összeg Forintban [Invoiced amount (HUF)]
 STAERT(numerikus 14 karakter): Statisztikai érték Forintban [Statistical value (HUF)]
+```
 
-
+*Feldolgozandó mezők:*
 ```
 [0] = Harmonizációs kód
 [1] = Termék megnevezése
