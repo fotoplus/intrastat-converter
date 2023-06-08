@@ -1,6 +1,6 @@
 # INTRASTAT
 
-Az intrastat import/export sablonoknak megfelelő CSV-t készít a beillesztett táblázat alapján.<br>
+Az intrastat adatszolgáltatáshoz az OSAP 2010 és 2012 sablonoknak megfelelő CSV-t készít a beillesztett táblázat alapján, amit fel lehet tölteni a KSH ELEKTRA felületén.
 
 
 ## Használat
