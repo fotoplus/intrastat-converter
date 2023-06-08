@@ -16,13 +16,13 @@ Az intrastat import/export sablonoknak megfelelő CSV-t készít a beillesztett 
 2. átalakítja a számos mezőket, hogy azokban valóban csak számok legyenek, például mértékegységek ne.
 3. ellenőrzi, és szükség esetén egyesíti a sorokat a következő logika szerint:
 >
-> Az ha az alábbi mezkők értékei megegyeznek, más sorokban is:
+> Az ha az alábbi mezkők értékei megegyeznek, más sorokban is: <br>
 >		  [0] Harmonizációs kód <br>
 >		  [3] Feladó tagállam / Rendeltetési tagállam <br>
 >		  [4] Származási ország <br>
 >    [8] Partner adószáma *(csak OSAP 2010)* <br>
 ><br>
-> Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul:
+> Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul: <br>
 >		 	[5] Összes nettó tömeg (kg) <br>
 >		 	[6] Összes mennyiség (db) <br>
 >		 	[7] Számlázott összeg (Ft) <br>
