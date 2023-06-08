@@ -18,18 +18,18 @@ $percek		= (isset($_POST['percek'])		and !empty($_POST['percek']))			? $_POST['p
 $tev		= (isset($_POST['tev'])			and !empty($_POST['tev']))				? $_POST['tev']			: date('Y', strtotime($prevtho));
 $tho		= (isset($_POST['tho'])			and !empty($_POST['tho']))				? $_POST['tho']			: date('m', strtotime($prevtho));
 
-$torzs		= (isset($_POST['torzs'])		and !empty($_POST['torzs']))			? $_POST['torzs']		: '';
+$torzs		= (isset($_POST['torzs'])		and !empty($_POST['torzs']))			? $_POST['torzs']		: '10367027';
 $sztorzs	= (isset($_POST['torzs'])		and !empty($_POST['sztorzs']))			? $_POST['sztorzs']		: $torzs;
 
-$jnev		= (isset($_POST['jnev'])		and !empty($_POST['jnev']))				? $_POST['jnev']		: '';
-$jbeosztas	= (isset($_POST['jbeosztas'])	and !empty($_POST['jbeosztas']))		? $_POST['jbeosztas']	: '';
-$jtelefon	= (isset($_POST['jtelefon'])	and !empty($_POST['jtelefon']))			? $_POST['jtelefon']	: '';
-$jemail		= (isset($_POST['jemail'])		and !empty($_POST['jemail']))			? $_POST['jemail']		: '';
+$jnev		= (isset($_POST['jnev'])		and !empty($_POST['jnev']))				? $_POST['jnev']		: 'Erdősi Zoltán';
+$jbeosztas	= (isset($_POST['jbeosztas'])	and !empty($_POST['jbeosztas']))		? $_POST['jbeosztas']	: 'Ügyvezető';
+$jtelefon	= (isset($_POST['jtelefon'])	and !empty($_POST['jtelefon']))			? $_POST['jtelefon']	: '+36309465680';
+$jemail		= (isset($_POST['jemail'])		and !empty($_POST['jemail']))			? $_POST['jemail']		: 'fotoplus@fotoplus.hu';
 
-$knev		= (isset($_POST['knev'])		and !empty($_POST['knev']))				? $_POST['knev']		: '';
-$kbeosztas	= (isset($_POST['kbeosztas'])	and !empty($_POST['kbeosztas']))		? $_POST['kbeosztas']	: '';
-$ktelefon	= (isset($_POST['ktelefon'])	and !empty($_POST['ktelefon']))			? $_POST['ktelefon']	: '';
-$kemail		= (isset($_POST['kemail'])		and !empty($_POST['kemail']))			? $_POST['kemail']		: '';
+$knev		= (isset($_POST['knev'])		and !empty($_POST['knev']))				? $_POST['knev']		: 'Pifkóné Somlai Angéla';
+$kbeosztas	= (isset($_POST['kbeosztas'])	and !empty($_POST['kbeosztas']))		? $_POST['kbeosztas']	: 'Pénzügyi vezető';
+$ktelefon	= (isset($_POST['ktelefon'])	and !empty($_POST['ktelefon']))			? $_POST['ktelefon']	: '+36305288701';
+$kemail		= (isset($_POST['kemail'])		and !empty($_POST['kemail']))			? $_POST['kemail']		: 'pifkone.somlaiangela@fotoplus.hu';
 
 $megjegyzes	= (isset($_POST['megjegyzes'])	and !empty($_POST['megjegyzes']))		? $_POST['megjegyzes']	: '';
 
@@ -56,6 +56,159 @@ if ($atalakit) {
 			$cell = explode("\t", $row);
 			$numColumns = max($numColumns, count($cell));
 			$data[] = $cell;
+		}
+
+		$rows=$data;
+		// Korrigáljuk a számoszlopokat, hogy a megfelelő formátumúak legyenek
+		for ($i = 0; $i < count($rows); $i++) {
+			if (isset($rows[$i][5])) {
+				$rows[$i][5] = preg_replace('/[^0-9,.]/', '', $rows[$i][5]);
+			} else {
+				$rows[$i][5] = '';
+			}
+		
+			if (isset($rows[$i][6])) {
+				$rows[$i][6] = preg_replace('/[^0-9,.]/', '', $rows[$i][6]);
+			} else {
+				$rows[$i][6] = '';
+			}
+		
+			if (isset($rows[$i][7])) {
+				$rows[$i][7] = preg_replace('/[^0-9,.]/', '', preg_replace('/[\n\r]/', '', $rows[$i][7]));
+			} else {
+				$rows[$i][7] = '';
+			}
+		
+			if (isset($rows[$i][8])) {
+				$rows[$i][8] = preg_replace('/[\n\r]/', '', $rows[$i][8]);
+			} else {
+				$rows[$i][8] = '';
+			}
+		}
+		$data=$rows;
+
+
+		/**
+		 *  Az OSAP 2012 sablon esetén, ha az alábbi mezkők értékei megegyeznek, más sorokban is:
+		 * 	[0] Harmonizációs kód
+		 * 	[3] Feladó tagállam / Rendeltetési tagállam
+		 * 	[4] Származási ország
+		 * 
+		 * Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul:
+		 * 	[5] Összes nettó tömeg (kg)
+		 * 	[6] Összes mennyiség (db)
+		 * 	[7] Számlázott összeg (Ft)
+		 * 
+		 */
+
+		if($osap == 2012) {
+			$rows=$data;
+			$mergedRows = [];
+			$processedIndices = [];
+			
+			for ($i = 0; $i < count($rows); $i++) {
+				if (!in_array($i, $processedIndices)) {
+					$currentRow = $rows[$i];
+					$mergedRow = $currentRow;
+					$isValid = true;
+			
+					for ($j = $i + 1; $j < count($rows); $j++) {
+						if (!in_array($j, $processedIndices)) {
+							$compareRow = $rows[$j];
+							if ($currentRow[0] === $compareRow[0] && $currentRow[3] === $compareRow[3] && $currentRow[4] === $compareRow[4]) {
+								if (isset($compareRow[5]) && is_numeric($compareRow[5])) {
+									$mergedRow[5] += $compareRow[5];
+								} else {
+									$isValid = false;
+									break;
+								}
+								if (isset($compareRow[6]) && is_numeric($compareRow[6])) {
+									$mergedRow[6] += $compareRow[6];
+								} else {
+									$isValid = false;
+									break;
+								}
+								if (isset($compareRow[7]) && is_numeric($compareRow[7])) {
+									$mergedRow[7] += $compareRow[7];
+								} else {
+									$isValid = false;
+									break;
+								}
+								$processedIndices[] = $j;
+							}
+						}
+					}
+			
+					if ($isValid) {
+						$mergedRows[] = $mergedRow;
+						$processedIndices[] = $i;
+					}
+				}
+			}
+
+			$data=$mergedRows;
+		}
+		
+		/**
+		 *  Az OSAP 2010 sablon esetén, ha az alábbi mezkők értékei megegyeznek, más sorokban is:
+		 * 	[0] Harmonizációs kód
+		 * 	[3] Feladó tagállam / Rendeltetési tagállam
+		 * 	[4] Származási ország
+		 *  [8] Partner adószáma
+		 * 
+		 * Akkor összeadjuk a számos mezők értékeit, a többinél az 1. sort vesszük alapul:
+		 * 	[5] Összes nettó tömeg (kg)
+		 * 	[6] Összes mennyiség (db)
+		 * 	[7] Számlázott összeg (Ft)
+		 * 
+		 */
+
+		 if($osap == 2010) {
+			$rows=$data;
+			$mergedRows = [];
+			$processedIndices = [];
+			
+			for ($i = 0; $i < count($rows); $i++) {
+				if (!in_array($i, $processedIndices)) {
+					$currentRow = $rows[$i];
+					$mergedRow = $currentRow;
+					$isValid = true;
+			
+					for ($j = $i + 1; $j < count($rows); $j++) {
+						if (!in_array($j, $processedIndices)) {
+							$compareRow = $rows[$j];
+							if ($currentRow[0] === $compareRow[0] && $currentRow[3] === $compareRow[3] && $currentRow[4] === $compareRow[4] && $currentRow[8] === $compareRow[8]) {
+								if (isset($compareRow[5]) && is_numeric($compareRow[5])) {
+									$mergedRow[5] += $compareRow[5];
+								} else {
+									$isValid = false;
+									break;
+								}
+								if (isset($compareRow[6]) && is_numeric($compareRow[6])) {
+									$mergedRow[6] += $compareRow[6];
+								} else {
+									$isValid = false;
+									break;
+								}
+								if (isset($compareRow[7]) && is_numeric($compareRow[7])) {
+									$mergedRow[7] += $compareRow[7];
+								} else {
+									$isValid = false;
+									break;
+								}
+								$processedIndices[] = $j;
+							}
+						}
+					}
+			
+					if ($isValid) {
+						$mergedRows[] = $mergedRow;
+						$processedIndices[] = $i;
+					}
+				}
+			}
+
+			$data=$mergedRows;
 		}
 
 		/**
@@ -456,7 +609,7 @@ if ($csv) {
 				text-decoration: none;
 				opacity: 0.5;
 			}
-			
+
 			footer a:hover {
 				opacity: 1;
 			}
